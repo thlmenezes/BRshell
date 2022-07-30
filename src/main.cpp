@@ -79,10 +79,10 @@ void add_history(string command)
 {
   if (command.compare(0, 9, "historico") == 0)
     return;
-  history.push_back(command);
+  history.push_front(command);
   if (history.size() > MAX_SIZE_HISTORY)
   {
-    history.pop_front();
+    history.pop_back();
   }
 }
 

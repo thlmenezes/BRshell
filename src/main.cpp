@@ -1,17 +1,31 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
+#include <limits.h>
+#include <unistd.h>
 
 using namespace std;
 
-void input_loop(istream &file)
+void input_loop(istream &file, bool interactivePrompt = true)
 {
   string command;
+  char *username;
+  username = getenv("USER");
 
   while (file.good())
   {
+    if (interactivePrompt)
+    {
+      char buffer[PATH_MAX];
+      getcwd(buffer, sizeof(buffer));
+      cout << "BRsh-"
+           << username
+           << "-"
+           << buffer
+           << ">";
+    }
     getline(file, command);
-    cout << command;
   }
 }
 
@@ -24,7 +38,7 @@ int main(int argc, char *argv[])
       exit(-1);
 
     istream is(&fb);
-    input_loop(is);
+    input_loop(is, false);
     fb.close();
   }
   else

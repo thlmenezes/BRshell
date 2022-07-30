@@ -38,7 +38,7 @@ alias "cd" "mudar"
 - [x] Ignore lines starting with `#`
 - [] Redirect std{in,out} to files
 - [] Read PATH from $HOME/.BRbshrc_profile
-- [] search commands in PATH
+- [x] search commands in PATH
 - [] enable pipe usage
 - [] Read aliases from $HOME/.BRshrc
 - [] Add Translation Preprocessing using aliases

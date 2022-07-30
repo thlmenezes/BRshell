@@ -1,10 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <string.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <unistd.h>
 #include <deque>
+#include <vector>
+#include <sys/wait.h>
 
 #define MAX_SIZE_HISTORY 10
 
@@ -18,6 +21,7 @@ void add_history(string);
 void print_history();
 void run_command(string);
 void run_history(int);
+void run_external(char **);
 
 void interpreter(istream &file, bool interactivePrompt = true)
 {
@@ -104,7 +108,7 @@ void run_command(string command)
   {
     version();
   }
-  if (command.compare(0, 9, "historico") == 0)
+  else if (command.compare(0, 9, "historico") == 0)
   {
     string arg = command.substr(9);
     if (arg.empty())
@@ -124,6 +128,22 @@ void run_command(string command)
       }
     }
   }
+  else
+  {
+    vector<char *> args;
+
+    char *token;
+
+    token = strtok(&command[0], " ");
+
+    while (token != NULL)
+    {
+      args.push_back(token);
+      token = strtok(NULL, " ");
+    }
+
+    run_external(&args[0]);
+  }
 }
 
 void run_history(int position)
@@ -137,4 +157,29 @@ void run_history(int position)
   string command = history[position - 1];
   add_history(command);
   run_command(command);
+}
+
+void run_external(char **args)
+{
+  pid_t pid = fork();
+
+  if (pid == -1)
+  {
+    cout << "Falha ao criar fork" << endl;
+    return;
+  }
+  else if (pid == 0)
+  {
+    if (execvp(args[0], args) < 0)
+    {
+      cout << "Comando não pode ser executado" << endl;
+    }
+    exit(0);
+  }
+  else
+  {
+    // waiting for child to terminate
+    wait(NULL);
+    return;
+  }
 }

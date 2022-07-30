@@ -104,6 +104,20 @@ void print_history()
 
 void run_command(string command)
 {
+  if (command.compare(0, 4, "exit") == 0)
+  {
+    string arg = command.substr(4);
+    int exitCode = 0;
+    try
+    {
+      exitCode = stoi(arg);
+    }
+    catch (const std::invalid_argument &ia)
+    {
+      exitCode = 0;
+    }
+    exit(exitCode);
+  }
   if (command.compare("ver") == 0)
   {
     version();

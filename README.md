@@ -36,6 +36,7 @@ alias "cd" "mudar"
     - in execution, adds the command to queue
     - IndexOutOfBounds: shows `Comando fora do intervalo do histórico`
 - [x] Ignore lines starting with `#`
+- [x] Command `exit [code]`: exit programs, optional exit code
 - [] Redirect std{in,out} to files
 - [] Read PATH from $HOME/.BRbshrc_profile
 - [x] search commands in PATH

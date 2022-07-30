@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <deque>
 
+#define MAX_SIZE_HISTORY 10
+
 using namespace std;
 
 deque<string> history;
@@ -78,7 +80,7 @@ void add_history(string command)
   if (command.compare(0, 9, "historico") == 0)
     return;
   history.push_back(command);
-  if (history.size() > 10)
+  if (history.size() > MAX_SIZE_HISTORY)
   {
     history.pop_front();
   }

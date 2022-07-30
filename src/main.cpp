@@ -11,6 +11,7 @@ using namespace std;
 deque<string> history;
 
 void prompt();
+void version();
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -25,7 +26,7 @@ void input_loop(istream &file, bool interactivePrompt = true)
     getline(file, command);
     if (command.compare("ver") == 0)
     {
-      cout << "BRshell v0.0.0 - 2022/July/31 - Thales Menezes <@thlmenezes>" << endl;
+      version();
     }
     if (command.compare(0, 9, "historico") == 0)
     {
@@ -76,4 +77,9 @@ void prompt()
        << "-"
        << buffer
        << ">";
+}
+
+void version()
+{
+  cout << "BRshell v0.0.0 - 2022/July/31 - Thales Menezes <@thlmenezes>" << endl;
 }

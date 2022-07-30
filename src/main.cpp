@@ -14,6 +14,7 @@ void prompt();
 void version();
 void add_history(string);
 void print_history();
+void run_command(string);
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -26,15 +27,8 @@ void input_loop(istream &file, bool interactivePrompt = true)
       prompt();
     }
     getline(file, command);
-    if (command.compare("ver") == 0)
-    {
-      version();
-    }
-    if (command.compare(0, 9, "historico") == 0)
-    {
-      print_history();
-    }
     add_history(command);
+    run_command(command);
   }
 }
 
@@ -93,5 +87,17 @@ void print_history()
   for (int index = 0; index < size; index++)
   {
     cout << index + 1 << " " << history[index] << '\n';
+  }
+}
+
+void run_command(string command)
+{
+  if (command.compare("ver") == 0)
+  {
+    version();
+  }
+  if (command.compare(0, 9, "historico") == 0)
+  {
+    print_history();
   }
 }

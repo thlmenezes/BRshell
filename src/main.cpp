@@ -205,7 +205,32 @@ void run_command(string command)
   }
   else
   {
-    run_external(&split_command(command)[0]);
+    if (command.find('|') != string::npos)
+      return;
+    string command_clone(command);
+    smatch match;
+    regex e("\\w+");
+    vector<string> args;
+
+    while (regex_search(command_clone, match, e))
+    {
+      args.emplace_back(match[0]);
+      command_clone = match.suffix().str();
+    }
+
+    vector<char *> parsed;
+    parsed.reserve(args.size());
+    for (auto &arg : args)
+    {
+      string translated(arg);
+      if (aliases.find(arg) != aliases.end())
+      {
+        translated = aliases[arg];
+      }
+      parsed.push_back(const_cast<char *>(translated.c_str()));
+    }
+
+    run_external(&parsed[0]);
   }
 }
 

@@ -12,6 +12,7 @@ deque<string> history;
 
 void prompt();
 void version();
+void add_history(string);
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -36,11 +37,7 @@ void input_loop(istream &file, bool interactivePrompt = true)
         cout << index + 1 << " " << history[index] << '\n';
       }
     }
-    history.push_back(command);
-    if (history.size() > 10)
-    {
-      history.pop_front();
-    }
+    add_history(command);
   }
 }
 
@@ -82,4 +79,13 @@ void prompt()
 void version()
 {
   cout << "BRshell v0.0.0 - 2022/July/31 - Thales Menezes <@thlmenezes>" << endl;
+}
+
+void add_history(string command)
+{
+  history.push_back(command);
+  if (history.size() > 10)
+  {
+    history.pop_front();
+  }
 }

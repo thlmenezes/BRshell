@@ -15,6 +15,7 @@ using namespace std;
 
 deque<string> history;
 
+vector<char *> split_command(string);
 void prompt();
 void version();
 void add_history(string);
@@ -63,6 +64,23 @@ int main(int argc, char *argv[])
 }
 
 // FUNÇÕES
+
+vector<char *> split_command(string command)
+{
+  vector<char *> args;
+
+  char *token;
+
+  token = strtok(&command[0], " ");
+
+  while (token != NULL)
+  {
+    args.push_back(token);
+    token = strtok(NULL, " ");
+  }
+
+  return args;
+}
 
 void prompt()
 {
@@ -144,19 +162,7 @@ void run_command(string command)
   }
   else
   {
-    vector<char *> args;
-
-    char *token;
-
-    token = strtok(&command[0], " ");
-
-    while (token != NULL)
-    {
-      args.push_back(token);
-      token = strtok(NULL, " ");
-    }
-
-    run_external(&args[0]);
+    run_external(&split_command(command)[0]);
   }
 }
 

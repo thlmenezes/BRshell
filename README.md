@@ -24,6 +24,18 @@ PATH=path1;path2;path3; . . . ;pathN
 
 ```txt
 alias "cd" "mudar"
+alias "ps" "processos"
+alias "rm" "remove"
+alias "mkdir" "criadir"
+alias "mv" "move"
+alias "cp" "copia"
+alias "ls" "lista"
+alias "grep" "filtra"
+alias "wc" "conta"
+alias "echo" "ecoa"
+alias "cat" "mostra"
+alias "find" "acha"
+alias "sleep" "dorme"
 ```
 
 ## Roadmap

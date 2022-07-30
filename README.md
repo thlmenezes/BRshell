@@ -32,7 +32,7 @@ alias "cd" "mudar"
 - [x] Infinite loop receiving commands of variable length
 - [x] Command `ver`: BRshell version, update date, author
 - [x] Command `historico`: 10 commands history queue
-- [] Command `historico [n]`: run command in history queue position `n`
+- [x] Command `historico [n]`: run command in history queue position `n`
     - in execution, adds the command to queue
     - IndexOutOfBounds: shows `Comando fora do intervalo do histórico`
 - [] Ignore lines starting with `#`

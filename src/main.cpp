@@ -15,6 +15,7 @@ void version();
 void add_history(string);
 void print_history();
 void run_command(string);
+void run_history(int);
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -98,6 +99,35 @@ void run_command(string command)
   }
   if (command.compare(0, 9, "historico") == 0)
   {
-    print_history();
+    string arg = command.substr(9);
+    if (arg.empty())
+    {
+      print_history();
+    }
+    else
+    {
+      try
+      {
+        int number = stoi(arg);
+        run_history(number);
+      }
+      catch (const std::invalid_argument &ia)
+      {
+        cerr << ia.what() << endl;
+      }
+    }
   }
+}
+
+void run_history(int position)
+{
+  int size = history.size();
+  if (position < 1 || position > size)
+  {
+    cout << "Comando fora do intervalo do historico" << endl;
+  }
+
+  string command = history[position - 1];
+  add_history(command);
+  run_command(command);
 }

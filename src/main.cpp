@@ -4,8 +4,11 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <unistd.h>
+#include <queue>
 
 using namespace std;
+
+queue<string> history;
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -29,6 +32,19 @@ void input_loop(istream &file, bool interactivePrompt = true)
     if (command.compare("ver") == 0)
     {
       cout << "BRshell v0.0.0 - 2022/July/31 - Thales Menezes <@thlmenezes>" << endl;
+    }
+    if (command.compare(0, 9, "historico") == 0)
+    {
+      int index = 1;
+      for (queue<string> dump(history); !dump.empty(); dump.pop())
+      {
+        cout << index++ << " " << dump.front() << '\n';
+      }
+    }
+    history.push(command);
+    if (history.size() > 10)
+    {
+      history.pop();
     }
   }
 }

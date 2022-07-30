@@ -28,7 +28,7 @@ alias "cd" "mudar"
 
 ## Roadmap
 
-- [] BRShell scripts
+- [x] BRShell scripts
 - [] Infinite loop receiving commands of variable length
 - [] Command `ver`: BRshell version, update date, author
 - [] Command `histórico`: 10 commands history queue

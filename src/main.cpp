@@ -8,14 +8,19 @@
 #include <deque>
 #include <vector>
 #include <sys/wait.h>
+#include <map>
+#include <regex>
 
 #define MAX_SIZE_HISTORY 10
 
 using namespace std;
 
 deque<string> history;
+map<string, string> aliases;
 
 vector<char *> split_command(string);
+void load_config();
+void load_aliases();
 void prompt();
 void version();
 void add_history(string);
@@ -45,6 +50,7 @@ void interpreter(istream &file, bool interactivePrompt = true)
 
 int main(int argc, char *argv[])
 {
+  load_config();
   if (argc > 1)
   {
     filebuf fb;
@@ -75,11 +81,48 @@ vector<char *> split_command(string command)
 
   while (token != NULL)
   {
+    cout << token << endl;
     args.push_back(token);
     token = strtok(NULL, " ");
   }
 
   return args;
+}
+
+void load_config()
+{
+  load_aliases();
+}
+
+void load_aliases()
+{
+  string brshrc(getenv("HOME")), command;
+
+  filebuf fb;
+  if (!fb.open(brshrc + "/.BRshrc", ios::in))
+    exit(-1);
+
+  istream file(&fb);
+  while (file.good())
+  {
+    getline(file, command);
+    if (command.compare(0, 5, "alias") == 0)
+    {
+      string command_clone(command);
+      smatch m;
+      regex e("\"(.+?)\"");
+      vector<string> args;
+
+      while (regex_search(command_clone, m, e))
+      {
+        args.emplace_back(m[1]);
+        command_clone = m.suffix().str();
+      }
+
+      aliases.emplace(args[1], args[0]);
+    }
+  }
+  fb.close();
 }
 
 void prompt()

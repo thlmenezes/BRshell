@@ -38,7 +38,7 @@ alias "cd" "mudar"
 - [x] Ignore lines starting with `#`
 - [x] Command `exit [code]`: exit programs, optional exit code
 - [x] search commands in env PATH
-- [ ] Read aliases from $HOME/.BRshrc
+- [x] Read aliases from $HOME/.BRshrc
 - [ ] Add Translation Preprocessing using aliases
 - [ ] Redirect std{in,out} to files
 - [ ] Read PATH from $HOME/.BRbshrc_profile

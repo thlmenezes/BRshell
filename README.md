@@ -32,15 +32,15 @@ alias "cd" "mudar"
 - [x] Infinite loop receiving commands of variable length
 - [x] Command `ver`: BRshell version, update date, author
 - [x] Command `historico`: 10 commands history queue
+- [x] in execution, adds the command to queue
 - [x] Command `historico [n]`: run command in history queue position `n`
-    - in execution, adds the command to queue
-    - IndexOutOfBounds: shows `Comando fora do intervalo do histórico`
+- [x] IndexOutOfBounds: shows `Comando fora do intervalo do histórico`
 - [x] Ignore lines starting with `#`
 - [x] Command `exit [code]`: exit programs, optional exit code
-- [] Redirect std{in,out} to files
-- [] Read PATH from $HOME/.BRbshrc_profile
+- [ ] Redirect std{in,out} to files
+- [ ] Read PATH from $HOME/.BRbshrc_profile
 - [x] search commands in PATH
-- [] enable pipe usage
-- [] Read aliases from $HOME/.BRshrc
-- [] Add Translation Preprocessing using aliases
-- [] Background jobs
+- [ ] enable pipe usage
+- [ ] Read aliases from $HOME/.BRshrc
+- [ ] Add Translation Preprocessing using aliases
+- [ ] Background jobs

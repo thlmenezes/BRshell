@@ -30,7 +30,7 @@ alias "cd" "mudar"
 
 - [x] BRShell scripts
 - [x] Infinite loop receiving commands of variable length
-- [] Command `ver`: BRshell version, update date, author
+- [x] Command `ver`: BRshell version, update date, author
 - [] Command `histórico`: 10 commands history queue
 - [] Command `histórico [n]`: run command in history queue position `n`
     - in execution, adds the command to queue

@@ -26,6 +26,10 @@ void input_loop(istream &file, bool interactivePrompt = true)
            << ">";
     }
     getline(file, command);
+    if (command.compare("ver") == 0)
+    {
+      cout << "BRshell v0.0.0 - 2022/July/31 - Thales Menezes <@thlmenezes>" << endl;
+    }
   }
 }
 

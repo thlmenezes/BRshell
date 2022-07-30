@@ -19,7 +19,7 @@ void print_history();
 void run_command(string);
 void run_history(int);
 
-void input_loop(istream &file, bool interactivePrompt = true)
+void interpreter(istream &file, bool interactivePrompt = true)
 {
   string command;
 
@@ -47,12 +47,12 @@ int main(int argc, char *argv[])
       exit(-1);
 
     istream is(&fb);
-    input_loop(is, false);
+    interpreter(is, false);
     fb.close();
   }
   else
   {
-    input_loop(cin);
+    interpreter(cin);
   }
 
   return 0;

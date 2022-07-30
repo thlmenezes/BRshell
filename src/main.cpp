@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <unistd.h>
-#include <queue>
+#include <deque>
 
 using namespace std;
 
-queue<string> history;
+deque<string> history;
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -35,16 +35,16 @@ void input_loop(istream &file, bool interactivePrompt = true)
     }
     if (command.compare(0, 9, "historico") == 0)
     {
-      int index = 1;
-      for (queue<string> dump(history); !dump.empty(); dump.pop())
+      int size = history.size();
+      for (int index = 0; index < size; index++)
       {
-        cout << index++ << " " << dump.front() << '\n';
+        cout << index + 1 << " " << history[index] << '\n';
       }
     }
-    history.push(command);
+    history.push_back(command);
     if (history.size() > 10)
     {
-      history.pop();
+      history.pop_front();
     }
   }
 }

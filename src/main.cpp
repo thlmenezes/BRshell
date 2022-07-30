@@ -10,23 +10,17 @@ using namespace std;
 
 deque<string> history;
 
+void prompt();
+
 void input_loop(istream &file, bool interactivePrompt = true)
 {
   string command;
-  char *username;
-  username = getenv("USER");
 
   while (file.good())
   {
     if (interactivePrompt)
     {
-      char buffer[PATH_MAX];
-      getcwd(buffer, sizeof(buffer));
-      cout << "BRsh-"
-           << username
-           << "-"
-           << buffer
-           << ">";
+      prompt();
     }
     getline(file, command);
     if (command.compare("ver") == 0)
@@ -67,4 +61,19 @@ int main(int argc, char *argv[])
   }
 
   return 0;
+}
+
+// FUNÇÕES
+
+void prompt()
+{
+  char *username;
+  username = getenv("USER");
+  char buffer[PATH_MAX];
+  getcwd(buffer, sizeof(buffer));
+  cout << "BRsh-"
+       << username
+       << "-"
+       << buffer
+       << ">";
 }

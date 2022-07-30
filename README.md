@@ -35,7 +35,7 @@ alias "cd" "mudar"
 - [x] Command `historico [n]`: run command in history queue position `n`
     - in execution, adds the command to queue
     - IndexOutOfBounds: shows `Comando fora do intervalo do histórico`
-- [] Ignore lines starting with `#`
+- [x] Ignore lines starting with `#`
 - [] Redirect std{in,out} to files
 - [] Read PATH from $HOME/.BRbshrc_profile
 - [] search commands in PATH

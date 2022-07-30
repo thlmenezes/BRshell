@@ -29,7 +29,10 @@ void input_loop(istream &file, bool interactivePrompt = true)
     {
       prompt();
     }
-    getline(file, command);
+    do
+    {
+      getline(file, command);
+    } while (command.compare(0, 1, "#") == 0);
     add_history(command);
     run_command(command);
   }

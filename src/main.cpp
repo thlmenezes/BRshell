@@ -13,6 +13,7 @@ deque<string> history;
 void prompt();
 void version();
 void add_history(string);
+void print_history();
 
 void input_loop(istream &file, bool interactivePrompt = true)
 {
@@ -31,11 +32,7 @@ void input_loop(istream &file, bool interactivePrompt = true)
     }
     if (command.compare(0, 9, "historico") == 0)
     {
-      int size = history.size();
-      for (int index = 0; index < size; index++)
-      {
-        cout << index + 1 << " " << history[index] << '\n';
-      }
+      print_history();
     }
     add_history(command);
   }
@@ -87,5 +84,14 @@ void add_history(string command)
   if (history.size() > 10)
   {
     history.pop_front();
+  }
+}
+
+void print_history()
+{
+  int size = history.size();
+  for (int index = 0; index < size; index++)
+  {
+    cout << index + 1 << " " << history[index] << '\n';
   }
 }

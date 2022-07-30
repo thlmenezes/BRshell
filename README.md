@@ -37,10 +37,11 @@ alias "cd" "mudar"
 - [x] IndexOutOfBounds: shows `Comando fora do intervalo do histórico`
 - [x] Ignore lines starting with `#`
 - [x] Command `exit [code]`: exit programs, optional exit code
-- [ ] Redirect std{in,out} to files
-- [ ] Read PATH from $HOME/.BRbshrc_profile
-- [x] search commands in PATH
-- [ ] enable pipe usage
+- [x] search commands in env PATH
 - [ ] Read aliases from $HOME/.BRshrc
 - [ ] Add Translation Preprocessing using aliases
+- [ ] Redirect std{in,out} to files
+- [ ] Read PATH from $HOME/.BRbshrc_profile
+- [ ] Use PATH from file not from env
+- [ ] enable pipe usage
 - [ ] Background jobs

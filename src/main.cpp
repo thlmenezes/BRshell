@@ -210,7 +210,7 @@ void run_command(string command)
     }
     exit(exitCode);
   }
-  if (command.compare("ver") == 0)
+  else if (command.compare("ver") == 0)
   {
     version();
   }

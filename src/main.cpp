@@ -17,10 +17,12 @@ using namespace std;
 
 deque<string> history;
 map<string, string> aliases;
+vector<string> path;
 
 vector<char *> split_command(string);
 void load_config();
 void load_aliases();
+void load_path();
 void prompt();
 void version();
 void add_history(string);
@@ -92,6 +94,35 @@ vector<char *> split_command(string command)
 void load_config()
 {
   load_aliases();
+  load_path();
+}
+
+void load_path()
+{
+  string brshrc(getenv("HOME")), command;
+
+  filebuf fb;
+  if (!fb.open(brshrc + "/.BRbshrc_profile", ios::in))
+    exit(-1);
+
+  istream file(&fb);
+  while (file.good())
+  {
+    getline(file, command);
+    if (command.compare(0, 5, "PATH=") == 0)
+    {
+      string command_clone(command);
+      smatch m;
+      regex e("[=;]\\w+");
+
+      while (regex_search(command_clone, m, e))
+      {
+        path.emplace_back(m[0].str().substr(1));
+        command_clone = m.suffix().str();
+      }
+    }
+  }
+  fb.close();
 }
 
 void load_aliases()

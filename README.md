@@ -52,8 +52,8 @@ alias "sleep" "dorme"
 - [x] search commands in env PATH
 - [x] Read aliases from $HOME/.BRshrc
 - [x] Add Translation Preprocessing using aliases
+- [x] Read PATH from $HOME/.BRbshrc_profile
 - [ ] Redirect std{in,out} to files
-- [ ] Read PATH from $HOME/.BRbshrc_profile
 - [ ] Use PATH from file not from env
 - [ ] enable pipe usage
 - [ ] Background jobs

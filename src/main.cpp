@@ -112,15 +112,18 @@ void load_path()
     getline(file, command);
     if (command.compare(0, 5, "PATH=") == 0)
     {
-      string command_clone(command);
-      smatch m;
-      regex e("[=;]\\w+");
+      string command_clone = command.substr(5);
+      auto index = command_clone.find(";");
 
-      while (regex_search(command_clone, m, e))
+      while (index != string::npos)
       {
-        path.emplace_back(m[0].str().substr(1));
-        command_clone = m.suffix().str();
+        path.emplace_back(command_clone.substr(0, index));
+        command_clone = command_clone.substr(index + 1);
+        index = command_clone.find(";");
       }
+
+      if (!command_clone.empty())
+        path.emplace_back(command_clone);
     }
   }
   fb.close();

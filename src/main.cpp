@@ -29,8 +29,9 @@ void add_history(string);
 void print_history();
 void run_command(string);
 void run_history(int);
-void run_external(char **);
+void run_external(vector<string>);
 string translate_alias(string);
+void exec_command(vector<string>);
 
 void interpreter(istream &file, bool interactivePrompt = true)
 {
@@ -262,19 +263,7 @@ void run_command(string command)
     if (command.find('|') != string::npos)
       return;
 
-    vector<char *> parsed;
-    parsed.reserve(args.size());
-    for (auto &arg : args)
-    {
-      string translated(arg);
-      if (aliases.find(arg) != aliases.end())
-      {
-        translated = aliases[arg];
-      }
-      parsed.push_back(const_cast<char *>(translated.c_str()));
-    }
-
-    run_external(&parsed[0]);
+    run_external(args);
   }
 }
 
@@ -291,7 +280,7 @@ void run_history(int position)
   run_command(command);
 }
 
-void run_external(char **args)
+void run_external(vector<string> args)
 {
   pid_t pid = fork();
 
@@ -302,10 +291,7 @@ void run_external(char **args)
   }
   else if (pid == 0)
   {
-    if (execvp(args[0], args) < 0)
-    {
-      cout << "Comando não pode ser executado" << endl;
-    }
+    exec_command(args);
     exit(0);
   }
   else
@@ -321,4 +307,30 @@ string translate_alias(string alias)
   if (aliases.count(alias) > 0)
     return aliases[alias];
   return alias;
+}
+
+void exec_command(vector<string> args)
+{
+  // Converte os argumentos string->const char *
+  vector<char *> args_formated;
+  args_formated.reserve(args.size());
+  for (auto &arg : args)
+  {
+    args_formated.push_back(const_cast<char *>(arg.c_str()));
+  }
+
+  // Para cada path especificado no profile, tenta executar o comando
+  for (unsigned i = 0; i < path.size(); i++)
+  {
+    string cmd = path[i] + args[0];
+    args_formated[0] = const_cast<char *>(cmd.c_str());
+    execv(cmd.c_str(), &args_formated[0]);
+  }
+
+  // Caso não tenha conseguido executar o comando, tenta executar um arquivo
+  args_formated[0] = const_cast<char *>(args[0].c_str());
+  execv(args[0].c_str(), &args_formated[0]);
+
+  // Caso não tenha conseguido executar um comando ou arquivo, avisa o usuário
+  cout << "Nao achei o comando: " << args[0] << endl;
 }

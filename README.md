@@ -14,10 +14,10 @@ A command can consist of 2 formats:
 
 `pipe_section[1] | ... | pipe_section[n]`
 
-## .BRbshrc_profile
+## .BRbshrc_profile example
 
 ```txt
-PATH=path1;path2;path3; . . . ;pathN
+PATH=/usr/bin/;/bin/
 ```
 
 ## .BRshrc
@@ -53,7 +53,7 @@ alias "sleep" "dorme"
 - [x] Read aliases from $HOME/.BRshrc
 - [x] Add Translation Preprocessing using aliases
 - [x] Read PATH from $HOME/.BRbshrc_profile
+- [x] Use PATH from file not from env
 - [ ] Redirect std{in,out} to files
-- [ ] Use PATH from file not from env
 - [ ] enable pipe usage
 - [ ] Background jobs

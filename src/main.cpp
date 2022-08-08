@@ -218,6 +218,9 @@ void run_command(string command)
   if (args.empty())
     return;
 
+  // use alias for command
+  args[0] = translate_alias(args[0]);
+
   if (args[0] == "exit")
   {
     int exitCode = 0;

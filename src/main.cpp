@@ -198,6 +198,7 @@ void print_history()
 
 void run_command(string command)
 {
+  // string.split() pythonico
   string command_clone(command);
   smatch match;
   regex e("[^\\s]+");
@@ -213,7 +214,7 @@ void run_command(string command)
   if (args.empty())
     return;
 
-  if (args[0].compare("exit") == 0)
+  if (args[0] == "exit")
   {
     int exitCode = 0;
     try
@@ -227,43 +228,32 @@ void run_command(string command)
     }
     exit(exitCode);
   }
-  else if (args[0].compare("ver") == 0)
+  else if (args[0] == "ver")
   {
     version();
   }
-  else if (args[0].compare("historico") == 0)
+  else if (args[0] == "historico")
   {
     if (args.size() == 1)
     {
       print_history();
+      return;
     }
-    else if (args.size() > 1)
+
+    try
     {
-      try
-      {
-        int number = stoi(args[1]);
-        run_history(number);
-      }
-      catch (const std::invalid_argument &ia)
-      {
-        cerr << ia.what() << endl;
-      }
+      int number = stoi(args[1]);
+      run_history(number);
+    }
+    catch (const std::invalid_argument &ia)
+    {
+      cerr << ia.what() << endl;
     }
   }
   else
   {
     if (command.find('|') != string::npos)
       return;
-    string command_clone(command);
-    smatch match;
-    regex e("\\w+");
-    vector<string> args;
-
-    while (regex_search(command_clone, match, e))
-    {
-      args.emplace_back(match[0]);
-      command_clone = match.suffix().str();
-    }
 
     vector<char *> parsed;
     parsed.reserve(args.size());

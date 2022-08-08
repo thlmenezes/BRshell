@@ -178,6 +178,8 @@ void add_history(string command)
 {
   if (command.compare(0, 9, "historico") == 0)
     return;
+  if (command.empty())
+    return;
   history.push_front(command);
   if (history.size() > MAX_SIZE_HISTORY)
   {
@@ -207,6 +209,9 @@ void run_command(string command)
     // DEBUG: cout << match[0] << endl;
     command_clone = match.suffix().str();
   }
+
+  if (args.empty())
+    return;
 
   if (args[0].compare("exit") == 0)
   {

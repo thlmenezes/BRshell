@@ -196,13 +196,25 @@ void print_history()
 
 void run_command(string command)
 {
-  if (command.compare(0, 4, "exit") == 0)
+  string command_clone(command);
+  smatch match;
+  regex e("[^\\s]+");
+  vector<string> args;
+
+  while (regex_search(command_clone, match, e))
   {
-    string arg = command.substr(4);
+    args.emplace_back(match[0]);
+    // DEBUG: cout << match[0] << endl;
+    command_clone = match.suffix().str();
+  }
+
+  if (args[0].compare("exit") == 0)
+  {
     int exitCode = 0;
     try
     {
-      exitCode = stoi(arg);
+      if (args.size() > 1)
+        exitCode = stoi(args[1]);
     }
     catch (const std::invalid_argument &ia)
     {
@@ -210,22 +222,21 @@ void run_command(string command)
     }
     exit(exitCode);
   }
-  else if (command.compare("ver") == 0)
+  else if (args[0].compare("ver") == 0)
   {
     version();
   }
-  else if (command.compare(0, 9, "historico") == 0)
+  else if (args[0].compare("historico") == 0)
   {
-    string arg = command.substr(9);
-    if (arg.empty())
+    if (args.size() == 1)
     {
       print_history();
     }
-    else
+    else if (args.size() > 1)
     {
       try
       {
-        int number = stoi(arg);
+        int number = stoi(args[1]);
         run_history(number);
       }
       catch (const std::invalid_argument &ia)

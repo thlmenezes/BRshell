@@ -30,6 +30,7 @@ void print_history();
 void run_command(string);
 void run_history(int);
 void run_external(char **);
+string translate_alias(string);
 
 void interpreter(istream &file, bool interactivePrompt = true)
 {
@@ -307,4 +308,11 @@ void run_external(char **args)
     wait(NULL);
     return;
   }
+}
+
+string translate_alias(string alias)
+{
+  if (aliases.count(alias) > 0)
+    return aliases[alias];
+  return alias;
 }

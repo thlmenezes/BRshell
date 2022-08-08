@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <map>
 #include <regex>
+#include <fcntl.h>
 
 #define MAX_SIZE_HISTORY 10
 
@@ -311,6 +312,50 @@ string translate_alias(string alias)
 
 void exec_command(vector<string> args)
 {
+  // Redirecionando input e output
+  for (unsigned i = 0; i < args.size(); i++)
+  {
+    // Redireciona a saída do comando para o arquivo especificado no argumento
+    if (args[i] == ">")
+    {
+      int file = open(args[i + 1].c_str(), O_WRONLY | O_CREAT | O_TRUNC);
+      dup2(file, 1);
+      close(file);
+
+      args.pop_back();
+      args.pop_back();
+    }
+    // Flag append, concatena no final do arquivo
+    else if (args[i] == ">>")
+    {
+      int file = open(args[i + 1].c_str(), O_WRONLY | O_CREAT | O_APPEND);
+      dup2(file, 1);
+      close(file);
+
+      args.pop_back();
+      args.pop_back();
+    }
+    // Redireciona a leitura de dados do comando para o arquivo especificado
+    else if (args[i] == "<")
+    {
+      int file = open(args[i + 1].c_str(), O_RDONLY);
+
+      if (file != -1)
+      {
+        dup2(file, 0);
+        close(file);
+
+        args.pop_back();
+        args.pop_back();
+      }
+      else
+      {
+        cout << "Arquivo não encontrado." << endl;
+        return;
+      }
+    }
+  }
+
   // Converte os argumentos string->const char *
   vector<char *> args_formated;
   args_formated.reserve(args.size());
